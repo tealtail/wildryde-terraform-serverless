@@ -2,7 +2,11 @@
 
 This project uses terraform and serverless to create AWSLabs' WildRydes tutorial project: https://github.com/awslabs/aws-serverless-workshops/tree/master/WebApplication
 
-To follow along you will need AWS CLI, Terraform and Serverless Framework installed.
+To follow along you will need AWS CLI, Terraform and Serverless Framework installed and configured.
+```sh
+npm install -g serverless
+brew update && brew install awscli terraform
+```
 
 ## Deploying
 
