@@ -6,6 +6,8 @@ To follow along you will need AWS CLI, Terraform and Serverless Framework instal
 ```sh
 npm install -g serverless
 brew update && brew install awscli terraform
+
+aws configure
 ```
 
 ## Deploying
