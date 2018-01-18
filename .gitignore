@@ -9,3 +9,5 @@ jspm_packages
 .terraform
 *.tfstate
 *.tfstate.backup
+
+.env.json

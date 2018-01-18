@@ -32,6 +32,13 @@ resource "aws_cognito_user_pool" "pool" {
     require_symbols   = false
     require_uppercase = false
   }
+
+  # Save an env.json file locally, populated with the pool arn, and ready to be used by serverless
+  provisioner "local-exec" {
+    command = <<EOF
+echo "{ \"AWS_COGNITO_POOL\": \"${aws_cognito_user_pool.pool.arn}\" }" > ../serverless/.env.json
+EOF
+  }
 }
 
 resource "aws_cognito_user_pool_client" "client" {

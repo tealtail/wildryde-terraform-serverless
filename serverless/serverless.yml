@@ -21,9 +21,7 @@ functions:
       - http:
           path: ride
           method: post
-          authorizer:
-            name: WildRydes
-            arn: ${opt:POOL_ARN}
+          authorizer: ${file(./.env.json):AWS_COGNITO_POOL}
           cors: true
 
 resources:

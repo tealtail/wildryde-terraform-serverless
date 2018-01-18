@@ -1,0 +1,15 @@
+{
+  "name": "wildrydes",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "sls invoke local --function request --path mocks/request-event.json"
+  },
+  "dependencies": {
+    "aws-sdk": "^2.184.0"
+  },
+  "devDependencies": {
+    "eslint": "^4.15.0",
+    "eslint-config-cloudreach": "^1.0.0"
+  }
+}

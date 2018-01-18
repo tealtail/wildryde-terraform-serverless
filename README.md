@@ -3,6 +3,7 @@
 This project uses terraform and serverless to create AWSLabs' WildRydes tutorial project: https://github.com/awslabs/aws-serverless-workshops/tree/master/WebApplication
 
 To follow along you will need AWS CLI, Terraform and Serverless Framework installed and configured.
+
 ```sh
 npm install -g serverless
 brew update && brew install awscli terraform
@@ -25,15 +26,14 @@ terraform apply
 
 AWS Cognito manages our user membership, and an S3 bucket for static site hosting will have been created as well as populated with files for the project application.
 
-The output from a successful `apply` will include some important identifiers for the resources created and the URL to visit our new web application.
+The output from a successful `apply` will include some important identifiers for the resources created and the URL to visit our new web application. You might notice a new file in the `serverless/` directory now. A part of the terraform provisiioning will automate the creation and population of an `env.json` file necessary for passing the created AWS cognito pool ARN over to `serverless/serverless.yml`, where it's used as an authorizer for our API method.
 
 ### Serverless Framework
 
-Copy the `cognito_user_pool_arn` from the output and pass the value in as an option to `sls deploy`
+from the `serverless` directory:
 
 ```sh
-cd ../serverless/
-sls deploy --POOL_ARN ARN_YOU_COPIED
+sls deploy
 ```
 
 Serverless Framework will have now deployed our DynamoDB table, API, and Lambda function.
