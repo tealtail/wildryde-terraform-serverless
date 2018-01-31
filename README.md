@@ -24,13 +24,13 @@ terraform plan
 terraform apply
 ```
 
- Terraform will use Amazon as your [provider](https://www.terraform.io/docs/providers/) to setup resources on your behalf. Wild Ride will setup two [resources](https://www.terraform.io/docs/providers/aws/index.html) on our behalf, Amazon Cognito and Amazon Simple Storage Service (S3). 
- 
-Terraform uses the `cognito-user-pool` module to manage our user membership and identities through [AWS Cognito](https://aws.amazon.com/cognito/).
- 
+  Terraform will use Amazon as your [provider](https://www.terraform.io/docs/providers/) to setup resources on your behalf. Wild Ride will setup two [resources](https://www.terraform.io/docs/providers/aws/index.html) on our behalf, Amazon Cognito and Amazon Simple Storage Service (S3). 
+  
+  Terraform uses the `cognito-user-pool` module to manage our user membership and identities through [AWS Cognito](https://aws.amazon.com/cognito/).
+
 Terraform uses the `s3-static-host` module to create an S3 bucket for static site hosting and populates it with files for the project application.
 
-The output from a successful `apply` will include some important identifiers for the resources created and the URL to visit our new web application. You might notice a new file in the `serverless/` directory now. A part of the terraform provisiioning will automate the creation and population of an `env.json` file necessary for passing the created AWS cognito pool ARN over to `serverless/serverless.yml`, where it's used as an authorizer for our API method.
+The output from a successful `terraform apply` will include some important identifiers for the resources created and the URL to visit our new web application. You might notice a new file in the `serverless/` directory now. A part of the terraform provisioning will automate the creation and population of an `serverless/.env.json` file necessary for passing the created AWS cognito pool ARN over to `serverless/serverless.yml`, where it's used as an authorizer for our API method.
 
 ### Serverless Framework
 
