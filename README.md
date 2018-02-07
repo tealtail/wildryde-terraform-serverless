@@ -46,24 +46,32 @@ Serverless Framework will have now deployed our DynamoDB table, API, and Lambda 
 
 ## Updating Application config.js
 
-Create a new file anywhere (locally) called `config.js` and paste this js snippet in. Fill in the values from output seen post-deploy. `invokeUrl` will come from `sls deploy` output as the **base url** for the "requestUnicorn" endpoint.
+Create a new file anywhere (locally) called `config.js` and paste this js snippet in.
+
+```js
+window._config = {
+  api: {
+    invokeUrl: '' // e.g. https://rc7nyt4tql.execute-api.us-west-2.amazonaws.com/prod',
+  },
+  cognito: {
+    userPoolId: '', // e.g. us-east-2_uXboG5pAb
+    userPoolClientId: '', // e.g. 25ddkmj4v6hfsfvruhpfi7n4hv
+    region: '' // e.g. us-east-2
+  }
+};
+```
+
+Fill in the values from output seen post-deploy. `invokeUrl` will come from `sls deploy` output as the **base url** for the "requestUnicorn" endpoint.
+
+
 
 example:
 endpoints:
 `POST - https://9ndfz9bgce.execute-api.us-east-1.amazonaws.com/dev/ride` would make my invokeUrl `https://9ndfz9bgce.execute-api.us-east-1.amazonaws.com/dev`
 
-```js
-window._config = {
-  cognito: {
-    userPoolId: '', // e.g. us-east-2_uXboG5pAb
-    userPoolClientId: '', // e.g. 25ddkmj4v6hfsfvruhpfi7n4hv
-    region: '' // e.g. us-east-2
-  },
-  api: {
-    invokeUrl: '' // e.g. https://rc7nyt4tql.execute-api.us-west-2.amazonaws.com/prod',
-  }
-};
-```
+
+Using the command `terraform output` in the `terraform` directory, you will be able to get the appropriate cognito credentials to fill out the `cognito` object.
+
 
 ## Upload config to S3
 
