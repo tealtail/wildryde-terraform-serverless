@@ -24,9 +24,15 @@ terraform plan
 terraform apply
 ```
 
-AWS Cognito manages our user membership, and an S3 bucket for static site hosting will have been created as well as populated with files for the project application.
+  Terraform will use Amazon as your [provider](https://www.terraform.io/docs/providers/) to setup resources on your behalf. Wild Ride will setup two [resources](https://www.terraform.io/docs/providers/aws/index.html) on our behalf, Amazon Cognito and Amazon Simple Storage Service (S3). 
+  
+  Terraform uses the `cognito-user-pool` module to manage our user membership and identities through [AWS Cognito](https://aws.amazon.com/cognito/).
 
-The output from a successful `apply` will include some important identifiers for the resources created and the URL to visit our new web application. You might notice a new file in the `serverless/` directory now. A part of the terraform provisiioning will automate the creation and population of an `env.json` file necessary for passing the created AWS cognito pool ARN over to `serverless/serverless.yml`, where it's used as an authorizer for our API method.
+Terraform uses the `s3-static-host` module to create an S3 bucket for static site hosting and populates it with files for the project application.
+
+Use` terraform plan` to test and preview what kind of actions terraform will take as dry-run. If all the described changes are correct and AWS is configured correctly run `terraform apply`. The output from a successful `terraform apply` will include some important identifiers for the resources created and the URL to visit our new web application. 
+
+You might notice a new file in the `serverless/` directory now. A part of the terraform provisioning will automate the creation and population of an `serverless/.env.json` file necessary for passing the created AWS cognito pool ARN over to `serverless/serverless.yml`, where it's used as an authorizer for our API method.
 
 ### Serverless Framework
 
@@ -40,24 +46,32 @@ Serverless Framework will have now deployed our DynamoDB table, API, and Lambda 
 
 ## Updating Application config.js
 
-Create a new file anywhere (locally) called `config.js` and paste this js snippet in. Fill in the values from output seen post-deploy. `invokeUrl` will come from `sls deploy` output as the **base url** for the "requestUnicorn" endpoint.
+Create a new file anywhere (locally) called `config.js` and paste this js snippet in.
+
+```js
+window._config = {
+  api: {
+    invokeUrl: '' // e.g. https://rc7nyt4tql.execute-api.us-west-2.amazonaws.com/prod',
+  },
+  cognito: {
+    userPoolId: '', // e.g. us-east-2_uXboG5pAb
+    userPoolClientId: '', // e.g. 25ddkmj4v6hfsfvruhpfi7n4hv
+    region: '' // e.g. us-east-2
+  }
+};
+```
+
+Fill in the values from output seen post-deploy. `invokeUrl` will come from `sls deploy` output as the **base url** for the "requestUnicorn" endpoint.
+
+
 
 example:
 endpoints:
 `POST - https://9ndfz9bgce.execute-api.us-east-1.amazonaws.com/dev/ride` would make my invokeUrl `https://9ndfz9bgce.execute-api.us-east-1.amazonaws.com/dev`
 
-```js
-window._config = {
-  cognito: {
-    userPoolId: '', // e.g. us-east-2_uXboG5pAb
-    userPoolClientId: '', // e.g. 25ddkmj4v6hfsfvruhpfi7n4hv
-    region: '' // e.g. us-east-2
-  },
-  api: {
-    invokeUrl: '' // e.g. https://rc7nyt4tql.execute-api.us-west-2.amazonaws.com/prod',
-  }
-};
-```
+
+Using the command `terraform output` in the `terraform` directory, you will be able to get the appropriate cognito credentials to fill out the `cognito` object.
+
 
 ## Upload config to S3
 
